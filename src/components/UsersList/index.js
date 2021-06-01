@@ -11,16 +11,16 @@ import './styles.css';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 200,
+      maxWidth: 250,
       margin: 25,
     },
     media: {
-      height: 140,
+      height: 200,
     },
 });
 
 
-const List = () => {
+const List = ({extraUsers}) => {
     const [users, setUsers] = useState([]);
 
     async function getUsers(){
@@ -32,7 +32,15 @@ const List = () => {
     useEffect(() => {
         getUsers();
     },[]);
-    
+
+    useEffect(() => {
+        const newUser = extraUsers.length ? extraUsers[extraUsers.length - 1]
+        : null;
+        if(newUser !== null ){
+            setUsers( user => [...users, newUser]);
+        }
+    },[extraUsers])
+
     const classes = useStyles();
 
     return(
